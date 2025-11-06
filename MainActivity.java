@@ -1,5 +1,16 @@
-public class MainActivity extends AppCompatActivity {
+package com.whitelist.bypass;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.VpnService;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.graphics.Color;
+
+public class MainActivity extends Activity {
     private Button vpnButton;
+    private static final int VPN_REQUEST_CODE = 1;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -11,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
             // Запрос разрешения VPN
             Intent intent = VpnService.prepare(this);
             if (intent != null) {
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, VPN_REQUEST_CODE);
             } else {
                 startVPNService();
             }
@@ -19,9 +30,17 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void startVPNService() {
-        Intent intent = new Intent(this, SurvivalVPN.class);
+        Intent intent = new Intent(this, WhiteListVPN.class);
         startService(intent);
-        vpnButton.setText("VPN ЗАПУЩЕН");
+        vpnButton.setText("VPN АКТИВЕН");
         vpnButton.setBackgroundColor(Color.GREEN);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == VPN_REQUEST_CODE && resultCode == RESULT_OK) {
+            startVPNService();
+        }
     }
 }
