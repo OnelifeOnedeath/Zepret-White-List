@@ -1,0 +1,5 @@
+1. Установить Termux из стороннего источника
+2. Скопировать proxy_server.py в Termux
+3. Запустить: python proxy_server.py
+4. Настроить WiFi прокси на локальный адрес
+5. Использовать пароль: village_survival_key_2024
