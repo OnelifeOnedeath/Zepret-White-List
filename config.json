@@ -1,0 +1,11 @@
+{
+    "encryption_key": "OnelifeOnedeath",
+    "proxy_ports": [8080, 8081, 8082],
+    "disguise_map": {
+        "youtube.com": "rutube.ru",
+        "discord.com": "vk.com",
+        "twitter.com": "telegram.org",
+        "github.com": "gitflic.ru"
+    },
+    "fallback_servers": ["server1.backup.com", "server2.backup.com"]
+}
