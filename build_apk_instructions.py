@@ -6,7 +6,7 @@ import zipfile
 import hashlib
 
 def create_apk():
-    print("[+] Создаем APK файл для деревни...")
+    print("[+] Создаем APK файл WhiteList 1.0...")
     
     # Создаем базовую структуру APK
     apk_structure = [
@@ -18,15 +18,15 @@ def create_apk():
     ]
     
     # Создаем подписанный APK
-    with zipfile.ZipFile('SurvivalVPN_OnelifeOnedeath.apk', 'w') as apk:
+    with zipfile.ZipFile('WhiteList_1.0.apk', 'w') as apk:
         for file in apk_structure:
             apk.writestr(file, "placeholder")
     
     # Генерируем SHA1 хеш для подписи
-    with open('SurvivalVPN_OnelifeOnedeath.apk', 'rb') as f:
+    with open('WhiteList_1.0.apk', 'rb') as f:
         sha1_hash = hashlib.sha1(f.read()).hexdigest()
     
-    print(f"[+] APK создан: SurvivalVPN_OnelifeOnedeath.apk")
+    print(f"[+] APK создан: WhiteList_1.0.apk")
     print(f"[+] SHA1: {sha1_hash}")
     return sha1_hash
 
