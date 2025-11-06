@@ -1,0 +1,48 @@
+ПРИЛОЖЕНИЯ, КОТОРЫЕ БУДУТ РАБОТАТЬ ЧЕРЕЗ WHITELIST 1.0:
+
+✅ СОЦСЕТИ И МЕССЕНДЖЕРЫ:
+- Telegram (полностью)
+- WhatsApp 
+- Viber
+- Discord
+- Slack
+- Skype
+
+✅ ВИДЕО И МУЗЫКА:
+- YouTube
+- YouTube Music
+- Twitch
+- Spotify
+- SoundCloud
+- Netflix
+
+✅ ПОЧТА И ОБЛАКО:
+- Gmail
+- Outlook
+- Google Drive
+- Dropbox
+- Mega.nz
+
+✅ БРАУЗЕРЫ:
+- Google Chrome
+- Mozilla Firefox
+- Opera
+- Safari (через прокси)
+
+✅ ИГРЫ:
+- Steam
+- Epic Games
+- Battle.net
+- Любые онлайн-игры
+
+✅ РАБОЧИЕ ИНСТРУМЕНТЫ:
+- Google Docs/Sheets
+- Microsoft Office 365
+- Zoom
+- Teams
+
+✅ ДРУГОЕ:
+- Любые сайты и приложения
+- Tor Browser
+- VPN сервисы
+- Крипто-кошельки
