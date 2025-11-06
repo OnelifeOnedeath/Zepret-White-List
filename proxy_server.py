@@ -17,7 +17,7 @@ class EncryptedProxy:
             
             # Подключаемся к целевому серверу
             target_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            target_socket.connect(('trusted-server.com', 8080))  # Притворяемся легальным трафиком
+            target_socket.connect(('trusted-server.com', 8080))
             target_socket.send(encrypted_request)
             
             response = target_socket.recv(4096)
@@ -36,5 +36,5 @@ class EncryptedProxy:
             threading.Thread(target=self.handle_client, args=(client,)).start()
 
 if __name__ == "__main__":
-    proxy = EncryptedProxy("village_survival_key_2024")
+    proxy = EncryptedProxy("OnelifeOnedeath")  # Пароль изменен
     proxy.start()
