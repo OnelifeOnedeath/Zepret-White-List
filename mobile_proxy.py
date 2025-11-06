@@ -1,11 +1,17 @@
 import socket
 import threading
 import hashlib
+import ssl
 
 class WhiteListProxy:
     def __init__(self, key="OnelifeOnedeath"):
         self.key = key
-        self.whitelist = ["gosuslugi.ru", "vk.com", "yandex.ru"]
+        self.domain_map = {
+            "youtube.com": "rutube.ru",
+            "discord.com": "vk.com", 
+            "twitter.com": "telegram.org",
+            "github.com": "gitflic.ru"
+        }
     
     def encrypt(self, data):
         key_hash = hashlib.sha256(self.key.encode()).digest()
@@ -13,40 +19,41 @@ class WhiteListProxy:
     
     def handle_client(self, client_socket):
         try:
-            encrypted_request = client_socket.recv(8192)
-            request = self.encrypt(encrypted_request)
+            request = client_socket.recv(8192)
+            decrypted_request = self.encrypt(request)
             
-            # Маскируем домены под белый список
-            domain_map = {
-                "youtube.com": "rutube.ru",
-                "discord.com": "vk.com",
-                "twitter.com": "telegram.org"
-            }
+            # Маскируем домены
+            for blocked, allowed in self.domain_map.items():
+                decrypted_request = decrypted_request.replace(
+                    blocked.encode(), 
+                    allowed.encode()
+                )
             
-            # Подменяем домен
-            for blocked, allowed in domain_map.items():
-                request = request.replace(blocked.encode(), allowed.encode())
+            # Отправляем через HTTPS для маскировки
+            context = ssl.create_default_context()
+            with socket.create_connection(('vk.com', 443)) as sock:
+                with context.wrap_socket(sock, server_hostname='vk.com') as ssock:
+                    ssock.send(decrypted_request)
+                    response = ssock.recv(8192)
             
-            # Отправляем через легальный прокси
-            target_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            target_socket.connect(('trusted-server.com', 80))
-            target_socket.send(self.encrypt(request))
+            encrypted_response = self.encrypt(response)
+            client_socket.send(encrypted_response)
             
-            response = target_socket.recv(8192)
-            client_socket.send(self.encrypt(response))
-            
-        except Exception:
-            pass
-
+        except Exception as e:
+            print(f"Error: {e}")
+    
     def start_proxy(self, port=8080):
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         server.bind(('0.0.0.0', port))
         server.listen(10)
-        print(f"[+] WhiteList 1.0 proxy started on port {port}")
+        print(f"[+] WhiteList Proxy started on port {port}")
         
         while True:
             client, addr = server.accept()
-            threading.Thread(target=self.handle_client, args=(client,)).start()
+            thread = threading.Thread(target=self.handle_client, args=(client,))
+            thread.daemon = True
+            thread.start()
 
 if __name__ == "__main__":
     proxy = WhiteListProxy()
