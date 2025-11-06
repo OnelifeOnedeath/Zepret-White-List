@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Твой токен
-BOT_TOKEN = "8323149012:AAFo6uMsT0gox1HIrOxYEPhrGmXU8-aY20E"
+BOT_TOKEN = "8519727279:AAE278hfJodKIE4Opxf0R-DkriqMrq4TZuw"
 
 class SimpleBot:
     def __init__(self):
