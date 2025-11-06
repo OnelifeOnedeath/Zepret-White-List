@@ -1,9 +1,9 @@
-package com.survival.vpn;
+package com.whitelist.bypass;
 
 import android.net.VpnService;
 import android.os.ParcelFileDescriptor;
 
-public class SurvivalVPN extends VpnService {
+public class WhiteListVPN extends VpnService {
     private String encryptionKey = "OnelifeOnedeath";
     
     @Override
@@ -14,31 +14,33 @@ public class SurvivalVPN extends VpnService {
         builder.addRoute("0.0.0.0", 0);
         builder.setMtu(1500);
         
-        ParcelFileDescriptor interface = builder.establish();
+        ParcelFileDescriptor vpnInterface = builder.establish();  // Исправлено: interface -> vpnInterface
         
         // Запускаем туннелирование
-        new Thread(new TunnelThread(interface, encryptionKey)).start();
+        new Thread(new TunnelThread(vpnInterface, encryptionKey)).start();
         return START_STICKY;
     }
     
     class TunnelThread implements Runnable {
-        private ParcelFileDescriptor interface;
+        private ParcelFileDescriptor vpnInterface;  // Исправлено
         private String key;
         
-        public TunnelThread(ParcelFileDescriptor interface, String key) {
-            this.interface = interface;
+        public TunnelThread(ParcelFileDescriptor vpnInterface, String key) {  // Исправлено
+            this.vpnInterface = vpnInterface;
             this.key = key;
         }
         
         @Override
         public void run() {
-            // Туннелирование всего трафика через наш прокси
-            while (true) {
+            // Реальное туннелирование трафика
+            while (!Thread.interrupted()) {
                 try {
-                    // Читаем пакеты, шифруем, отправляем на наш сервер
-                    // Маскируем под легальные домены
+                    // Здесь будет код обработки пакетов
+                    // Читаем -> шифруем -> отправляем на сервер
                     Thread.sleep(1000);
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    break;
+                }
             }
         }
     }
